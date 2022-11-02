@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+</head>
+<body>
+    
+    <!--    修饰符. 
+            1）作用：表示一个指令以特殊方式绑定
+            2）例如：.prevent修饰符，表示v-on指令，对触发的事件调用event.preventDefault()，阻止事件原本的默认行为
+    -->
+    <form id="app" action="save" @submit.prevent="onSubmit()">
+        <label for="username">
+            <input type="text" id="username" v-model="user.username" ></input>
+            <Button type="submit">保存</Button>
+        </label>
+    </form>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                user: {
+                    username: false
+                }
+            },
+            methods: {
+                onSubmit(){
+                    if(this.user.username){
+                        console.log('提交表单')
+                    }else{
+                        alert('请输入用户名')
+                    }
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>

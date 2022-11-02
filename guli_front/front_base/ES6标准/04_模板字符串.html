@@ -1,0 +1,25 @@
+<script>
+//模板字符串相当于加强版的字符串，用反引号``
+//除了作为普通字符串，还可以定义多行字符串、在字符串中加入变量和表达式
+
+//1）多行字符串
+let str = `Hey,
+can you stop angry now?`;
+console.log(str);
+
+//2）插入变量和表达式
+let name = "Mike";
+let age = 20;
+
+let info = `My name is ${name}, I am ${age + 1} years old next year.`;
+console.log(info);
+
+//3）调用函数
+function f(){
+    return "hava fun!";
+}
+
+let str2 = `Gam start, ${f()}`;
+console.log(str2);
+
+</script>

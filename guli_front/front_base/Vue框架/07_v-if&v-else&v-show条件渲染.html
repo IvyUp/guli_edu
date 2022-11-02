@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+</head>
+<body>
+    
+    <!-- v-if和v-else完成条件切换 -->
+    <div id="app01">
+        <input type="checkbox" v-model="ok">同意许可协议</input>
+        <h1 v-if="ok">我同意</h1>
+        <h1 v-else>我不同意</h1>
+    </div>
+
+
+    <!-- v-show完成相同的功能 -->
+    <div id="app02">
+        <input type="checkbox" v-model="ok">同意许可协议</input>
+        <h1 v-show="ok">我同意</h1>
+        <h1 v-show="!ok">我不同意</h1>
+    </div>
+<script>
+    new Vue({
+        el: "#app01",
+        data: {
+            ok: false
+        }
+    })
+</script>
+
+<script>
+    new Vue({
+        el: "#app02",
+        data: {
+            ok: false
+        }
+    })
+</script>
+</body>
+</html>

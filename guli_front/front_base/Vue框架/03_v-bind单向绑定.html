@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+</head>
+<body>
+    <!-- v-bind指令
+        将模型数据绑定到html属性中
+    -->
+    <h1 id="app01" v-bind:title="message">
+        {{content}}
+    </h1>
+
+    <!-- v-bind简写  ： -->
+    <h2 id="app02" :title="message">
+        {{content}}
+    </h2>
+
+    <script>
+        new Vue({
+            el: "#app01",
+            data: {
+                content: '我是标题',
+                message: '页面加载于' + new Date().toLocaleString
+            }
+        })
+        new Vue({
+            el: "#app02",
+            data: {
+                content: '我是标题',
+                message: '页面加载于' + new Date().toLocaleString
+            }
+        })
+    </script>
+
+</body>
+</html>

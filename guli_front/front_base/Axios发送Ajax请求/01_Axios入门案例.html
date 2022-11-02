@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <script src="axios.min.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <div v-for="user in userList">
+            {{user.name}} --- {{user.age}}
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+
+                // 声明一个空数组，用来存放响应数据
+                userList: []   
+
+            },
+            created(){
+
+                //在Vue数据渲染前执行
+                this.getList()
+                
+            },
+            methods:{
+
+                getList(){
+
+                    //以指定请求方式发送Ajax请求
+                    axios.get('data.json')
+                        //响应成功执行的方法
+                        .then(response => {
+                            //将响应体中的数据封装到声明的数组中
+                            this.userList = response.data.data.items
+                            console.log(response)
+                        })
+                        //响应异常执行的方法
+                        .catch(error => {
+                            console.log(error)
+                        })
+                    
+                }
+
+            }    
+        })
+    </script>
+
+</body>
+</html>

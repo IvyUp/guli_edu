@@ -1,0 +1,33 @@
+<script>
+
+/*
+箭头函数：提供了一种更加简洁的函数书写方式。
+    语法：参数 => 函数体
+    特点： 1）没有参数，或者多个参数，要用()
+          2）有多行执行语句，用{}，表示代码块
+*/
+
+
+//传统方式定义函数
+var f1 = function(a){
+    return a * 2
+}
+console.log(f1(1))
+
+//ES6箭头函数定义方法
+var f2 = b => b * 2
+console.log(f2(2))
+
+
+//传统方式
+var f3 = function(a,b){
+    return a + b
+}
+console.log(f3(1,2))
+
+//ES6方式
+var f4 = (a, b) => a + b
+console.log(f4(10,20))
+
+
+</script>

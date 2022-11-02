@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+</head>
+<body>
+ 
+    <!-- Vue组件，可以扩展HTML元素，封装可重用的代码 -->
+
+<div id="app">
+    <!-- 使用自定义组件 -->
+    <Navbar></Navbar>
+</div>
+
+
+<script>
+    new Vue({
+        el: '#app',
+        //自定义局部组件
+        components: {
+            //组件名
+            'Navbar': {
+                //组件内容
+                template: '<ul><li>首页</li><li>学员管理</li></ul>'
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
