@@ -7,6 +7,8 @@ import com.atguigu.eduservice.mapper.EduCourseMapper;
 import com.atguigu.eduservice.service.EduCourseDescriptionService;
 import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.servicebase.exception.MyException;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +54,57 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
 
         return course.getId();
+    }
+
+    /**
+     * 根据课程id，查询课程信息
+     * @param courseId 课程id
+     * @return CourseInfoVo
+     */
+    @Override
+    public CourseInfoVo getCourseVoById(String courseId) {
+        CourseInfoVo courseVo = new CourseInfoVo();
+
+        //1 查询课程信息，封装到CourseVo中
+        QueryWrapper<EduCourse> courseWrapper = new QueryWrapper<>();
+        courseWrapper.eq("id", courseId);
+        EduCourse course = this.getOne(courseWrapper);
+        BeanUtils.copyProperties(course, courseVo);
+
+        //2 查询课程简介信息，封装到CourseVo中
+        QueryWrapper<EduCourseDescription> descriptionWrapper = new QueryWrapper<>();
+        descriptionWrapper.eq("id", courseId);
+        EduCourseDescription courseDescription = descriptionService.getOne(descriptionWrapper);
+        courseVo.setDescription(courseDescription.getDescription());
+
+        //3 返回封装好的CourseVo
+        return courseVo;
+    }
+
+    /**
+     * 更新课程信息
+     * @param courseVo 课程信息
+     * @return
+     */
+    @Override
+    public Boolean updateCourseVo(CourseInfoVo courseVo) {
+
+        EduCourse course = new EduCourse();
+        BeanUtils.copyProperties(courseVo, course);
+        UpdateWrapper<EduCourse> courseUpdateWrapper = new UpdateWrapper<>();
+        courseUpdateWrapper.setEntity(course);
+        if (!this.updateById(course)){
+            return false;
+        };
+
+        EduCourseDescription courseDescription = new EduCourseDescription();
+        courseDescription.setDescription(courseVo.getDescription());
+        UpdateWrapper<EduCourseDescription> descriptionUpdateWrapper = new UpdateWrapper<>();
+        descriptionUpdateWrapper.setEntity(courseDescription);
+        if (!descriptionService.updateById(courseDescription)){
+            return false;
+        };
+
+        return true;
     }
 }
