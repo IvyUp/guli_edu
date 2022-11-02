@@ -109,16 +109,41 @@ export default {
             teacherList:[],     //封装所有的讲师
             subjectOneList:[],  //封装所有的一级学科
             subjectTwoList:[],   //封装所有的二级学科
-            BASE_API: process.env.BASE_API // 接口API地址
+            BASE_API: process.env.BASE_API, // 接口API地址
+            courseId: '' //课程id
         }
     },
     created(){
-        //初始化所有讲师
-        this.getTeacherList()
-        //初始化一级学科
-        this.getOneSubjectList()
+
+        if(this.$route.params && this.$route.params.id){
+            this.courseId = this.$route.params.id
+            this.getCourseInfo()
+        }else{
+            //初始化所有讲师
+            this.getTeacherList()
+            //初始化一级学科
+            this.getOneSubjectList()
+        }
+
     },
     methods: {
+
+        //回显课程信息
+        getCourseInfo(){
+            course.getCourseInfoById(this.courseId).then(response => {
+                this.courseInfo = response.data.items
+                subject.getSubjectList().then(response => {
+                    this.subjectOneList = response.data.list  
+                    for(var i=0; i<this.subjectOneList.length; i++){
+                        if(this.courseInfo.subjectParentId == this.subjectOneList[i].id){
+                            this.subjectTwoList = this.subjectOneList[i].children
+                        }
+                    }
+                })
+                this.getTeacherList()                           
+            })
+        },
+
         //上传课程封面成功后，执行
         handleAvatarSuccess(res, file){
             this.courseInfo.cover = res.data.url
@@ -164,6 +189,14 @@ export default {
         },
 
         saveOrUpdate(){
+            if(this.courseInfo.id){
+                this.updateCourse()
+            }else{
+                this.saveCourse()
+            } 
+        },
+
+        saveCourse(){
             course.addCourseInfo(this.courseInfo).then(response => {
                 //提示
                 this.$message({
@@ -172,6 +205,18 @@ export default {
                 });   
                 //跳转到第二步
                  this.$router.push({path:'/course/chapter/'+response.data.courseId}) 
+            })
+        },
+
+        updateCourse(){
+            course.updateCourseInfo(this.courseInfo).then(response => {
+                //提示
+                this.$message({
+                    type: 'success',
+                    message: '修改课程信息成功!'
+                });   
+                //跳转到第二步
+                this.$router.push({path:'/course/chapter/'+this.courseId}) 
             })
         }
     }
