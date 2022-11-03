@@ -63,28 +63,26 @@
 
         <div slot="footer" class="dialog-footer">
             <el-button @click="dialogChapterFormVisible = false">取 消</el-button>
-            <el-button :disabled="saveVideoBtnDisabled" type="primary" @click="saveOrUpdate">确 定</el-button>
+            <el-button  type="primary" @click="saveOrUpdate">确 定</el-button>
         </div>
     </el-dialog>
 
     <!-- 添加和修改小节表单 -->
     <el-dialog :visible.sync="dialogVideoFormVisible" title="添加课时">
+
       <el-form :model="video" label-width="120px">
         <el-form-item label="课时标题">
           <el-input v-model="video.title"/>
         </el-form-item>
-
         <el-form-item label="课时排序">
           <el-input-number v-model="video.sort" :min="0" controls-position="right"/>
         </el-form-item>
-
         <el-form-item label="是否免费">
           <el-radio-group v-model="video.free">
             <el-radio :label="true">免费</el-radio>
             <el-radio :label="false">默认</el-radio>
           </el-radio-group>
         </el-form-item>
-
         <el-form-item label="上传视频">
           <!-- TODO -->
         </el-form-item>
@@ -92,7 +90,7 @@
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVideoFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveOrUpdateVideo">确 定</el-button>
+        <el-button :disabled="saveVideoBtnDisabled" type="primary" @click="saveOrUpdateVideo">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -160,10 +158,10 @@ export default {
         //添加或修改小节
         saveOrUpdateVideo(){
           this.saveVideoBtnDisabled = true
-          if(this.video.id){
-            this.updateVideo()   
-          }else{
+          if(!this.video.id){
             this.saveVideo()
+          }else{
+            this.updateVideo()   
           }
         },
 
@@ -175,7 +173,6 @@ export default {
           //重置内容
           this.video.title = ''
           this.video.sort = 0
-
           this.saveVideoBtnDisabled = false
         },
 
@@ -208,11 +205,8 @@ export default {
           //2 回显小节数据
           video.getVideoById(videoId).then(response => {
             //回显数据
-            this.video.title = response.data.items.title
-            this.video.sort = response.data.items.sort
-            this.video.free = response.data.items.isFree
-            this.video.chapterId = response.data.items.chapterId
-            this.video.courseId = response.data.items.courseId
+            this.video = response.data.items
+            //this.video.free = response.data.items.isFree
           })
         },
 

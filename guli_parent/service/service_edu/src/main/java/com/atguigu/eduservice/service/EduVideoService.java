@@ -14,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface EduVideoService extends IService<EduVideo> {
 
+    //更新小节数据
     void updateVideoInfoById(VideoInfoForm videoInfoForm);
+
 }

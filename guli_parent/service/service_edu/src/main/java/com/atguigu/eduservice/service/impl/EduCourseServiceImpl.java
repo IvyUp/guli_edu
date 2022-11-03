@@ -2,7 +2,9 @@ package com.atguigu.eduservice.service.impl;
 
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduCourseDescription;
+import com.atguigu.eduservice.entity.constant.CourseStatus;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
+import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.mapper.EduCourseMapper;
 import com.atguigu.eduservice.service.EduCourseDescriptionService;
 import com.atguigu.eduservice.service.EduCourseService;
@@ -107,4 +109,34 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
         return true;
     }
+
+    /**
+     * 根据课程id，获取课程发布信息
+     * @param courseId
+     * @return
+     */
+    @Override
+    public CoursePublishVo getCoursePublishVoById(String courseId) {
+        CoursePublishVo coursePublishVo = baseMapper.getCoursePublishVoById(courseId);
+        if (coursePublishVo == null){
+            throw new MyException(20001, "获取课程发布信息失败，courseId = " + courseId);
+        }
+        return coursePublishVo;
+    }
+
+    /**
+     * 根据课程id，发布课程信息
+     * @param courseId
+     */
+    @Override
+    public void publishCourseById(String courseId) {
+        EduCourse course = new EduCourse();
+        course.setId(courseId);
+        course.setStatus(CourseStatus.PUBLISHED);
+        int result = baseMapper.updateById(course);
+        if (result <= 0){
+            throw new MyException(20001, "课程发布失败");
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.atguigu.eduservice.controller;
 
 import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
+import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.service.EduCourseService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +64,17 @@ public class EduCourseController {
         return R.ok();
     }
 
+    @GetMapping("/publish/{courseId}")
+    public R getCoursePublishVoById(@PathVariable String courseId){
+        CoursePublishVo coursePublishVo = courseService.getCoursePublishVoById(courseId);
+        return R.ok().data("items",coursePublishVo);
+    }
 
-
-
+    @PutMapping("/publish/{courseId}")
+    public R publishCourseById(@PathVariable String courseId){
+        courseService.publishCourseById(courseId);
+        return R.ok();
+    }
 
 }
 
