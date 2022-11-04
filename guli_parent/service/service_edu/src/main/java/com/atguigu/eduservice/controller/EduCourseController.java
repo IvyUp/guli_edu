@@ -2,13 +2,18 @@ package com.atguigu.eduservice.controller;
 
 
 import com.atguigu.commonutils.R;
+import com.atguigu.eduservice.entity.EduCourse;
+import com.atguigu.eduservice.entity.course.CourseQuery;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.service.EduCourseService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -64,17 +69,42 @@ public class EduCourseController {
         return R.ok();
     }
 
+    /**
+     * 添加课程发布信息
+     * @param courseId
+     * @return
+     */
     @GetMapping("/publish/{courseId}")
     public R getCoursePublishVoById(@PathVariable String courseId){
         CoursePublishVo coursePublishVo = courseService.getCoursePublishVoById(courseId);
         return R.ok().data("items",coursePublishVo);
     }
 
+    /**
+     * 修改课程发布信息
+     * @param courseId
+     * @return
+     */
     @PutMapping("/publish/{courseId}")
     public R publishCourseById(@PathVariable String courseId){
         courseService.publishCourseById(courseId);
         return R.ok();
     }
+
+    @GetMapping("/page/{page}/{limit}")
+    public R pageQuery(@PathVariable("page") Long page,
+                       @PathVariable("limit") Long limit,
+                       @RequestBody(required = false) CourseQuery courseQuery){
+        Page<EduCourse> pageParam = new Page<>(page, limit);
+        courseService.pageQuery(pageParam,courseQuery);
+        List<EduCourse> records = pageParam.getRecords();
+        Long total = pageParam.getTotal();
+        return R.ok().data("total", total).data("rows", records);
+    }
+
+
+
+
 
 }
 
