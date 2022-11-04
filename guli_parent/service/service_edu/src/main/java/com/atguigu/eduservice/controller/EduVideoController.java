@@ -49,14 +49,13 @@ public class EduVideoController {
     }
 
     /**
-     * 根据id删除小节
-     * @param id
+     * 根据id删除小节 + 视频
+     * @param videoId
      * @return
      */
-    @DeleteMapping("/delete/{id}")
-    public R deleteVideoById(@PathVariable String id){
-        //TODO 删除视频
-        videoService.removeById(id);
+    @DeleteMapping("/delete/{videoId}")
+    public R deleteVideoById(@PathVariable("videoId") String videoId){
+        videoService.removeVideoById(videoId);
         return R.ok();
     }
 

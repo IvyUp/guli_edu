@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 服务类
@@ -38,5 +40,6 @@ public interface EduCourseService extends IService<EduCourse> {
     //课程分页查询
     void pageQuery(Page<EduCourse> pageParam, CourseQuery courseQuery);
 
-
+    //获取id排名后8位的课程
+    List<EduCourse> getCourse();
 }

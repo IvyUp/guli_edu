@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 服务实现类
@@ -177,6 +179,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }
 
        this.page(pageParam, queryWrapper);
+    }
+
+    /**
+     * 获取id排名后8位的课程
+     * @return
+     */
+    @Override
+    public List<EduCourse> getCourse() {
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("id").last("limit 8");
+        return baseMapper.selectList(wrapper);
     }
 
 }
