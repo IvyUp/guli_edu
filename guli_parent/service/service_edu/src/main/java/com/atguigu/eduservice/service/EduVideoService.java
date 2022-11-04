@@ -17,4 +17,11 @@ public interface EduVideoService extends IService<EduVideo> {
     //更新小节数据
     void updateVideoInfoById(VideoInfoForm videoInfoForm);
 
+    //根据课程id，删除所有小节 + 阿里云视频
+    Boolean removeVideoByCourseId(String courseId);
+
+    //根据章节id，删除所有小节 + 阿里云视频
+    void removeVideoByChapterId(String chapterId);
 }
+
+

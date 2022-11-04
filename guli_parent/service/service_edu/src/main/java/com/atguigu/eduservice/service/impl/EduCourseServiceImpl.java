@@ -1,7 +1,9 @@
 package com.atguigu.eduservice.service.impl;
 
+
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduCourseDescription;
+import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.constant.CourseStatus;
 import com.atguigu.eduservice.entity.course.CourseQuery;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
@@ -153,7 +155,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         queryWrapper.orderByDesc("gmt_create");
 
         if (courseQuery == null){
-            baseMapper.selectPage(pageParam, queryWrapper);
+            this.page(pageParam, queryWrapper);
             return;
         }
 
@@ -174,7 +176,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             queryWrapper.eq("subject_id", subjectId);
         }
 
-        baseMapper.selectPage(pageParam, queryWrapper);
+       this.page(pageParam, queryWrapper);
     }
 
 }

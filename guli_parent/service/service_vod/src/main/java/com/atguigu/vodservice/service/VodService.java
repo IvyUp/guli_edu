@@ -2,6 +2,8 @@ package com.atguigu.vodservice.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @Description：
  * @Author：Ivy_up
@@ -13,4 +15,7 @@ public interface VodService {
 
     //删除视频
     void deleteVideoById(String videoId);
+
+    //批量删除视频
+    void deleteVideoBatchByIds(List<String> videoIds);
 }

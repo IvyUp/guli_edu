@@ -1,9 +1,12 @@
 package com.atguigu.eduservice.service;
 
+
 import com.atguigu.eduservice.entity.EduCourse;
+import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.course.CourseQuery;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -34,4 +37,6 @@ public interface EduCourseService extends IService<EduCourse> {
 
     //课程分页查询
     void pageQuery(Page<EduCourse> pageParam, CourseQuery courseQuery);
+
+
 }

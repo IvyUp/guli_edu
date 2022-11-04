@@ -8,6 +8,7 @@ import com.atguigu.eduservice.mapper.EduChapterMapper;
 import com.atguigu.eduservice.service.EduChapterService;
 import com.atguigu.eduservice.service.EduVideoService;
 import com.atguigu.servicebase.exception.MyException;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -76,20 +77,12 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         return chapterVoList;
     }
 
-    /**
-     * 根据章节id，删除章节
-     * @param chapterId
-     * @return
-     */
+
     @Override
-    public boolean deleteChapterById(String chapterId) {
-        QueryWrapper<EduVideo> videoQueryWrapper = new QueryWrapper<>();
-        videoQueryWrapper.eq("chapter_id", chapterId);
-        int count = videoService.count(videoQueryWrapper);
-        if (count > 0){
-            throw new MyException(20001,"此章节存在小节，禁止删除，chapterId = " + chapterId);
-        }
-        boolean result = this.removeById(chapterId);
-        return result;
+    public Boolean removeChapterByCourseId(String courseId) {
+        QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", courseId);
+        int result = baseMapper.delete(wrapper);
+        return result > 0;
     }
 }

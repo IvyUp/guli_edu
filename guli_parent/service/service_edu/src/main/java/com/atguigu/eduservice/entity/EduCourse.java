@@ -27,7 +27,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="EduCourse对象", description="课程")
 public class EduCourse implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 13333L;
 
     @ApiModelProperty(value = "课程ID")
     @TableId(value = "id", type = IdType.ID_WORKER_STR)

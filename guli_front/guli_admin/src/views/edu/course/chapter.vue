@@ -225,6 +225,9 @@ export default {
           //重置内容
           this.video.title = ''
           this.video.sort = 0
+          this.fileList = []
+          this.video.videoSourceId = ''
+          this.video.videoOriginalName = ''
           this.saveVideoBtnDisabled = false
         },
 

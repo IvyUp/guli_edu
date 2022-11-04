@@ -4,6 +4,7 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.atguigu.ossservice.service.OssService;
 import com.atguigu.ossservice.util.ConstantUtil;
 import org.joda.time.DateTime;
@@ -45,6 +46,10 @@ public class OssServiceImpl implements OssService {
 
             // 创建OSSClient实例。
             OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+            //设置HTTP头里面的Content-Type
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentType(getcontentType(fileName.substring(fileName.lastIndexOf("."))));
+
             //调用oss方法实现上传
             ossClient.putObject(bucketName, fileName, inputStream);
             //关闭OSSClient
@@ -60,5 +65,51 @@ public class OssServiceImpl implements OssService {
         }
 
     }
+
+
+    /**
+     * 解决问题，直接访问上传的图片地址，会让下载而不是直接访问
+     * 设置设置 HTTP 头 里边的 Content-Type
+     * txt 格式经过测试，不需要转换 上传之后就是 text/plain。其他未测试
+     * 已知  如果 Content-Type = .jpeg 访问地址会直接下载，本方法也是解决此问题
+     * @param FilenameExtension
+     * @return
+     */
+    public static String getcontentType(String FilenameExtension) {
+        if (FilenameExtension.equalsIgnoreCase(".bmp")) {
+            return "image/bmp";
+        }
+        if (FilenameExtension.equalsIgnoreCase(".gif")) {
+            return "image/gif";
+        }
+        if (FilenameExtension.equalsIgnoreCase(".jpeg") ||
+                FilenameExtension.equalsIgnoreCase(".jpg") ||
+                FilenameExtension.equalsIgnoreCase(".png")) {
+            return "image/jpg";
+        }
+        if (FilenameExtension.equalsIgnoreCase(".html")) {
+            return "text/html";
+        }
+
+        if (FilenameExtension.equalsIgnoreCase(".txt")) {
+            return "text/plain";
+        }
+        if (FilenameExtension.equalsIgnoreCase(".vsd")) {
+            return "application/vnd.visio";
+        }
+        if (FilenameExtension.equalsIgnoreCase(".pptx") ||
+                FilenameExtension.equalsIgnoreCase(".ppt")) {
+            return "application/vnd.ms-powerpoint";
+        }
+        if (FilenameExtension.equalsIgnoreCase(".docx") ||
+                FilenameExtension.equalsIgnoreCase(".doc")) {
+            return "application/msword";
+        }
+        if (FilenameExtension.equalsIgnoreCase(".xml")) {
+            return "text/xml";
+        }
+        return "image/jpg";
+    }
+
 
 }

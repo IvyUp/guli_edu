@@ -19,6 +19,7 @@ public interface EduChapterService extends IService<EduChapter> {
     //获取章节小节数据
     List<ChapterVo> getChapterList(String courseId);
 
-    //根据章节id，删除章节
-    boolean deleteChapterById(String chapterId);
+    //根据课程id，删除所有章节
+    Boolean removeChapterByCourseId(String courseId);
 }
+

@@ -5,6 +5,7 @@ import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduChapter;
 import com.atguigu.eduservice.entity.chapter.ChapterVo;
 import com.atguigu.eduservice.service.EduChapterService;
+import com.atguigu.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,9 @@ public class EduChapterController {
 
     @Autowired
     private EduChapterService chapterService;
+
+    @Autowired
+    private EduVideoService videoService;
 
     @GetMapping("/list/{courseId}")
     public R getChapterList(@PathVariable("courseId") String courseId){
@@ -72,18 +76,20 @@ public class EduChapterController {
     }
 
     /**
-     * 根据章节id，删除章节
+     * 根据章节id，删除章节 + 小节
      * @param chapterId
      * @return
      */
     @DeleteMapping("/delete/{chapterId}")
-    public R deleteChapterById(@PathVariable String chapterId){
-        boolean result = chapterService.deleteChapterById(chapterId);
-        if (result){
-            return R.ok().message("删除章节信息成功");
-        }else {
-            return R.error().message("删除章节信息失败");
-        }
+    public R deleteChapterById(@PathVariable("chapterId") String chapterId){
+        //1 删除小节
+        videoService.removeVideoByChapterId(chapterId);
+        //2 删除章节
+        chapterService.removeById(chapterId);
+        return R.ok();
     }
+
+
+
 }
 

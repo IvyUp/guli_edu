@@ -75,9 +75,8 @@
                             <img :src="scope.row.cover" alt="scope.row.title" width="150px">
                         </div>
                         <div class="title">
-                            <a href=""> {{ scope.row.title }}</a>
-                                课时
-                            <p> {{ scope.row.lessonNum }} </p>
+                            <a href=""> {{ scope.row.title }}</a>                              
+                            <p> {{ scope.row.lessonNum }} 课时</p>
                         </div>
                     </div>
                 </template>
@@ -111,7 +110,8 @@
                     <router-link :to="'/edu/course/chapter/'+scope.row.id">
                         <el-button type="text" size="mini" icon="el-icon-edit">编辑课程大纲</el-button>
                     </router-link>
-                    <el-button type="text" size="mini" icon="el-icon-delete">删除</el-button>
+                    <el-button type="text" size="mini" icon="el-icon-delete"
+                        @click="removeDataById(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -162,7 +162,24 @@ export default {
         //获取讲师列表
         this.initTeacherList()
     },
-    methods: { 
+    methods: {
+        removeDataById(id) {
+            this.$confirm('此操作将删除课程所有内容, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {  
+                course.deleteCourseById(id)
+                //TODO 删除视频
+                    .then(response =>{
+                        this.$message({
+                            type: 'success',
+                            message: '课程删除成功!'
+                        });
+                        this.fetchData()
+                    })
+            }) //点击取消，执行catch方法
+        },
        fetchData(page = 1){ //调用API层，获取数据库中的数据
             this.page = page
             this.listLoading = true

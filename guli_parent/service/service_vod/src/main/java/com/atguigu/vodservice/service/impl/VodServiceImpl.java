@@ -13,12 +13,14 @@ import com.atguigu.servicebase.exception.MyException;
 import com.atguigu.vodservice.service.VodService;
 import com.atguigu.vodservice.util.AliyunVodSDKUtil;
 import com.atguigu.vodservice.util.ConstantPropertiesUtil;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static com.atguigu.vodservice.util.AliyunVodSDKUtil.initVodClient;
 
@@ -87,6 +89,24 @@ public class VodServiceImpl implements VodService {
         }
     }
 
+    /**
+     * 批量删除视频
+     * @param videoIds
+     */
+    @Override
+    public void deleteVideoBatchByIds(List<String> videoIds) {
+        String accessKeyId = ConstantPropertiesUtil.ACCESS_KEY_ID;
+        String accessKeySecret = ConstantPropertiesUtil.ACCESS_KEY_SECRET;
+        try {
+            DefaultAcsClient client = initVodClient(accessKeyId, accessKeySecret);
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            String ids = StringUtils.join(videoIds.toArray(), ",");
+            request.setVideoIds(ids);
+            client.getAcsResponse(request);
+        }catch (ClientException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

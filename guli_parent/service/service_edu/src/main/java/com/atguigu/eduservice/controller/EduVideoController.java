@@ -55,6 +55,7 @@ public class EduVideoController {
      */
     @DeleteMapping("/delete/{id}")
     public R deleteVideoById(@PathVariable String id){
+        //TODO 删除视频
         videoService.removeById(id);
         return R.ok();
     }

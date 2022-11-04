@@ -3,17 +3,25 @@ package com.atguigu.eduservice.controller;
 
 import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduCourse;
+import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.course.CourseQuery;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
+import com.atguigu.eduservice.entity.vo.EduTeacherQuery;
+import com.atguigu.eduservice.service.EduChapterService;
 import com.atguigu.eduservice.service.EduCourseService;
+import com.atguigu.eduservice.service.EduVideoService;
+import com.atguigu.servicebase.exception.MyException;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,6 +39,12 @@ public class EduCourseController {
 
     @Autowired
     private EduCourseService courseService;
+
+    @Autowired
+    private EduChapterService chapterService;
+
+    @Autowired
+    private EduVideoService videoService;
 
     /**
      * 添加新课程
@@ -91,20 +105,32 @@ public class EduCourseController {
         return R.ok();
     }
 
-    @GetMapping("/page/{page}/{limit}")
+    @PostMapping("/page/{page}/{limit}")
     public R pageQuery(@PathVariable("page") Long page,
                        @PathVariable("limit") Long limit,
                        @RequestBody(required = false) CourseQuery courseQuery){
         Page<EduCourse> pageParam = new Page<>(page, limit);
         courseService.pageQuery(pageParam,courseQuery);
         List<EduCourse> records = pageParam.getRecords();
-        Long total = pageParam.getTotal();
+        long total = pageParam.getTotal();
         return R.ok().data("total", total).data("rows", records);
     }
 
-
-
-
+    /**
+     * 根据课程id，删除课程 + 章节 + 小节
+     * @param courseId
+     * @return
+     */
+    @DeleteMapping("/delete/{courseId}")
+    public R removeCourseById(@PathVariable String courseId){
+        //1 删除课程小节
+        videoService.removeVideoByCourseId(courseId);
+        //2 删除课程章节
+        chapterService.removeChapterByCourseId(courseId);
+        //3 删除课程
+        courseService.removeById(courseId);
+        return R.ok();
+    }
 
 }
 

@@ -62,8 +62,20 @@ export default {
     getPageList(page, limit, searchObj){
         return request({
             url: `/eduservice/course/page/${page}/${limit}`,
-            method: 'get',
+            method: 'post',
             data: searchObj
+        })
+    },
+
+    /**
+     * 根据课程id，删除课程
+     * @param {课程id} courseId 
+     * @returns 
+     */
+    deleteCourseById(courseId){
+        return request({
+            url: `/eduservice/course/delete/${courseId}`,
+            method: 'delete'
         })
     }
 

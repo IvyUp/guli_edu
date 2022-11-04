@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @Description：
  * @Author：Ivy_up
@@ -40,5 +42,12 @@ public class VodController {
         vodService.deleteVideoById(videoId);
         return R.ok();
     }
+
+    @DeleteMapping("/delete/batch")
+    public R deleteVideoBatchByIds(@RequestParam List<String> videoIds){
+        vodService.deleteVideoBatchByIds(videoIds);
+        return R.ok();
+    }
+
 
 }
