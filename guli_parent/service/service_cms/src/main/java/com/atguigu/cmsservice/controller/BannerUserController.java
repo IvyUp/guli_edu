@@ -5,10 +5,7 @@ import com.atguigu.cmsservice.service.CrmBannerService;
 import com.atguigu.commonutils.R;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +15,7 @@ import java.util.Map;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/user/cmsservice/banner")
+@RequestMapping("/user/educms/banner")
 public class BannerUserController {
 
     @Autowired
@@ -28,12 +25,23 @@ public class BannerUserController {
      * 获取id后3位的banner
      * @return
      */
-    @GetMapping("get")
+    @GetMapping("/get")
     public R getBanner(){
         List<CrmBanner> bannerList = bannerService.getBanner();
         return R.ok().data("items",bannerList);
     }
 
 
+
+    /**
+     * 添加banner
+     * @param banner
+     * @return
+     */
+    @PostMapping("/add")
+    public R addBanner(@RequestBody CrmBanner banner){
+        bannerService.save(banner);
+        return R.ok();
+    }
 
 }

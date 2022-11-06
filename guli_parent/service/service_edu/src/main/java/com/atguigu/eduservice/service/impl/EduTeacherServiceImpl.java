@@ -28,7 +28,8 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
     public List<EduTeacher> getTeacher() {
         QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id").last("limit 4");
-        return baseMapper.selectList(wrapper);
+        List<EduTeacher> teacherList = baseMapper.selectList(wrapper);
+        return teacherList;
     }
 
 

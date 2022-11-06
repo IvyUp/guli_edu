@@ -114,6 +114,9 @@
 </template>
 
 <script>
+import banner from '@/api/banner'
+import teacher from '@/api/teacher'
+import course from '@/api/course'
 
 export default {
   data () {
@@ -129,7 +132,39 @@ export default {
           nextEl: '.swiper-button-next',//下一页dom节点
           prevEl: '.swiper-button-prev'//前一页dom节点
         }
-      }
+      },
+      //banner数组
+      bannerList:[],
+      eduList:[],
+      teacherList:[]
+    }
+  },
+  created() {
+    //调用查询banner的方法
+    this.getBannerList()
+    //调用查询热门课程和名师的方法
+    this.getTeacherList()
+    this.getCourseList()
+  },
+  methods:{
+    //查询banner数据
+    getBannerList() {
+      banner.getListBanner()
+        .then(response => {
+          this.bannerList = response.data.data.items
+        })
+    },
+    getTeacherList() {
+      teacher.getTeacherList()
+        .then(response => {
+          this.teacherList = response.data.data.items
+        })
+    },
+    getCourseList() {
+      course.getCourseList()
+        .then(response => {
+          this.eduList = response.data.data.items
+        })
     }
   }
 }

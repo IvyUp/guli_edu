@@ -26,13 +26,22 @@ public class OssController {
      * 上传用户头像到oss
      * @return
      */
+    //@PostMapping("/upload/avatar")
+//    public R uploadAvatar(MultipartFile file){
+//        String avatarUrl = ossService.uploadFile(file);
+//        return R.ok().data("url", avatarUrl);
+//    }
+
+    /**
+     * 上传图片到本地
+     * @param file
+     * @return
+     */
     @PostMapping("/upload/avatar")
     public R uploadAvatar(MultipartFile file){
         String avatarUrl = ossService.uploadFile(file);
         return R.ok().data("url", avatarUrl);
     }
-
-
 
 
 }

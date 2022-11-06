@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface OssService {
 
-    //上传文件到阿里云
+    //上传文件到类路径
     String uploadFile(MultipartFile file);
 
 }
