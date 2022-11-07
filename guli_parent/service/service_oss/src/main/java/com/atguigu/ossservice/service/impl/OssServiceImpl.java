@@ -6,9 +6,12 @@ import com.aliyun.oss.model.ObjectMetadata;
 import com.atguigu.ossservice.service.OssService;
 import com.atguigu.ossservice.util.ConstantUtil;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,23 +73,58 @@ public class OssServiceImpl implements OssService {
 //
 //    }
 
+    @Value("${server.port}")
+    private String serverPort;
+
+//    @Autowired
+//    private ServletContext servletContext;
 
     @Override
     public String uploadFile(MultipartFile file) {
         if (!file.isEmpty()){
+            //1 文件的存放位置
+            //虚拟路径：浏览器通过Tomcat服务器访问Web应用中的资源时使用的路径
+            //String destFileFolderVirtualPath = "/static";
+            //真实物理路径：在硬盘空间里能够直接找到文件的路径。
+           // String destFileFolderRealPath = servletContext.getRealPath(destFileFolderVirtualPath);
+
             //上传文件路径
-            String path = "E:\\guliedu\\guli_parent\\service\\service_oss\\src\\main\\resources\\static\\";
-            //上传文件名
-            String fileName = UUID.randomUUID().toString().replace("-","" ) + file.getOriginalFilename();
+            String destFileFolderRealPath = "E:\\guliedu\\guli_parent\\service\\service_oss\\src\\main\\resources\\static";
 
-            Path filePath = Paths.get(path + fileName);
+            //2 保存文件的文件名
+            String generatedFileName = UUID.randomUUID().toString().replace("-", "");
+            //获取源文件扩展名
+            String fileExtName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            //保存文件的文件名
+            String destFileName = generatedFileName + "" + fileExtName;
 
+            //3 保存文件的路径
+            String destFilePath = destFileFolderRealPath + "/" + destFileName;
+
+            //4 创建File对象，对应文件具体保存的位置
+            File destFile = new File(destFilePath);
+
+            //5 执行转存
             try {
-                Files.write(filePath, file.getBytes());
-                return "http://localhost:8002/" + fileName;
+                file.transferTo(destFile);
+                return "http://localhost:" + serverPort + "/static/" + destFileName;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
+
+            //上传文件名
+//            String fileName = UUID.randomUUID().toString().replace("-","" ) + file.getOriginalFilename();
+//
+//            Path filePath = Paths.get(path + fileName);
+//
+//            try {
+//                Files.write(filePath, file.getBytes());
+//                return "http://localhost:8002/" + fileName;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
         return null;
     }
