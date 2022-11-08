@@ -1,5 +1,6 @@
 package com.atguigu.msmservice.controller;
 
+
 import com.atguigu.commonutils.R;
 import com.atguigu.msmservice.service.MsmService;
 import com.atguigu.msmservice.util.RandomCodeUtil;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
  * @Author：Ivy_up
  * @Create：2022-11-07 11:14
  */
-@RestController
-@RequestMapping("/edumsm/code")
 @CrossOrigin
+@RestController
+@RequestMapping("/edumessage/code")
 public class MsmController {
 
     @Autowired
