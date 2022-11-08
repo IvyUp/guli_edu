@@ -107,7 +107,7 @@ public class OssServiceImpl implements OssService {
             //5 执行转存
             try {
                 file.transferTo(destFile);
-                return "http://localhost:" + serverPort + "/static/" + destFileName;
+                return "http://localhost:" + serverPort + "/" + destFileName;
             } catch (IOException e) {
                 e.printStackTrace();
             }

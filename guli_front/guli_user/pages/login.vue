@@ -73,11 +73,11 @@
                 //1）将token存在cookie中
                 cookie.set('guli_token',response.data.data.token, {domain:'localhost'})
                 //2）在request.js添加拦截器，传递token信息
-                
+
                 //3）登录成功，根据token获取用户信息
                 login.getLoginInfo().then(response => {
                     //4）将用户信息记录在cookie
-                    this.loginInfo = response.data.data.items
+                    this.loginInfo = JSON.stringify(response.data.data.items)
                     cookie.set('guli_user',this.loginInfo,{domain:'localhost'})
                 })                
                 //5）跳转到首页

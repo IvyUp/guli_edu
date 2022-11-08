@@ -8,6 +8,7 @@ import com.atguigu.eduservice.entity.constant.CourseStatus;
 import com.atguigu.eduservice.entity.course.CourseQuery;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
+import com.atguigu.eduservice.entity.vo.CourseQueryVo;
 import com.atguigu.eduservice.mapper.EduCourseMapper;
 import com.atguigu.eduservice.service.EduCourseDescriptionService;
 import com.atguigu.eduservice.service.EduCourseService;
@@ -21,7 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -190,6 +193,69 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id").last("limit 8");
         return baseMapper.selectList(wrapper);
+    }
+
+    /**
+     *
+     * @param teacherId 讲师id
+     * @return 讲师的课程信息
+     */
+    @Override
+    public List<EduCourse> getCourseByTeacherId(String teacherId) {
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.eq("teacher_id", teacherId);
+        List<EduCourse> courseList = baseMapper.selectList(wrapper);
+        return courseList;
+    }
+
+
+    @Override
+    public Map<String, Object> getCoursePageByVo(Page<EduCourse> coursePage, CourseQueryVo courseQueryVo) {
+        //获取查询条件
+        String subjectParentId = courseQueryVo.getSubjectParentId();    //一级学科
+        String subjectId = courseQueryVo.getSubjectId();    //二级学科
+        String buyCountSort = courseQueryVo.getBuyCountSort();  //销量排序
+        String gmtCreateSort = courseQueryVo.getGmtCreateSort();    //开课时间排序
+        String priceSort = courseQueryVo.getPriceSort();    //课程价格排序
+
+        //条件查询
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(subjectParentId)){
+            wrapper.eq("subject_parent_id", subjectParentId);
+        }
+        if (!StringUtils.isEmpty(subjectId)){
+            wrapper.eq("subject_id", subjectId);
+        }
+        if (!StringUtils.isEmpty(buyCountSort)){
+            wrapper.orderByDesc("buy_count");
+        }
+        if (!StringUtils.isEmpty(gmtCreateSort)){
+            wrapper.orderByDesc("gmt_create");
+        }
+        if (!StringUtils.isEmpty(priceSort)){
+            wrapper.orderByDesc("price");
+        }
+        baseMapper.selectPage(coursePage, wrapper);
+
+        //封装数据
+        List<EduCourse> records = coursePage.getRecords();
+        long current = coursePage.getCurrent();
+        long pages = coursePage.getPages();
+        long size = coursePage.getSize();
+        long total = coursePage.getTotal();
+        boolean hasPrevious = coursePage.hasPrevious();
+        boolean hasNext = coursePage.hasNext();
+
+        HashMap<String, Object> courseMap = new HashMap<>();
+        courseMap.put("records",records);
+        courseMap.put("current",current);
+        courseMap.put("pages",pages);
+        courseMap.put("size",size);
+        courseMap.put("total",total);
+        courseMap.put("hasPrevious",hasPrevious);
+        courseMap.put("hasNext",hasNext);
+
+        return courseMap;
     }
 
 }

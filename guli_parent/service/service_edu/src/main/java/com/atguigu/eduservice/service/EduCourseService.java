@@ -6,11 +6,13 @@ import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.course.CourseQuery;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
+import com.atguigu.eduservice.entity.vo.CourseQueryVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,4 +44,10 @@ public interface EduCourseService extends IService<EduCourse> {
 
     //获取id排名后8位的课程
     List<EduCourse> getCourse();
+
+    //根据讲师id，获取课程信息
+    List<EduCourse> getCourseByTeacherId(String teacherId);
+
+    //查询课程条件分页
+    Map<String, Object> getCoursePageByVo(Page<EduCourse> coursePage, CourseQueryVo courseQueryVo);
 }

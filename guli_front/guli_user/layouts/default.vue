@@ -153,6 +153,7 @@ import "~/assets/css/global.css";
 import "~/assets/css/web.css";
 
 import cookie from 'js-cookie';
+import login from '@/api/login'
 
 export default {
   data() {
@@ -169,16 +170,36 @@ export default {
     }
   },
   created() {
+    this.token = this.$route.query.token
+    if(this.token){
+      this.wxLogin()
+    }
     this.showInfo()
   },
   methods: {
+    //微信登录
+    wxLogin(){
+      cookie.set('guli_token',this.token, {domain:'localhost'})
+      login.getLoginInfo().then(response => {
+        this.loginInfo = response.data.data.items
+        cookie.set('guli_user',this.loginInfo, {domain:'localhost'})
+      })
+    },
+    //账号+密码登录
     showInfo() {
       var useStr = cookie.get("guli_user")
       //将JSON字符串转换成JSON对象
       if(useStr){
         this.loginInfo = JSON.parse(useStr)
       }
-      //this.loginInfo = cookie.get("guli_user")
+    },
+    //退出
+    logout(){
+      //清空cookie
+      cookie.set('guli_token',"", {domain:'localhost'})
+      cookie.set('guli_user',"", {domain:'localhost'})
+      //跳转到首页
+      window.location.href="/"
     }
   }
 }
