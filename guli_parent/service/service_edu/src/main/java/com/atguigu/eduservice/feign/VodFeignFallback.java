@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Component
 public class VodFeignFallback implements VodFeign{
+
     @Override
     public R deleteVideoById(String videoId) {
         return R.error().message("方法异常，熔断器启动......");
@@ -21,4 +22,5 @@ public class VodFeignFallback implements VodFeign{
     public R deleteVideoBatchByIds(List<String> videoIds) {
         return R.error().message("方法异常，熔断器启动......");
     }
+
 }

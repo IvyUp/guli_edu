@@ -36,8 +36,20 @@ export default{
             url: `/eduservice/subject/list`,
             method: 'get'
         })
-    }
+    },
 
+ 
+    /**
+     * 
+     * @param {课程id} id 
+     * @returns 课程详细信息
+     */
+    getCourseDetail(id){
+        return request({
+            url: `/user/eduservice/course/detail/${id}`,
+            method: 'get'
+        })
+    }
 
 
 }

@@ -111,4 +111,18 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return  baseMapper.selectOne(wrapper);
     }
 
+    /**
+     * 获取每天注册人数
+     * @param date 日期
+     * @return 注册数
+     */
+    @Override
+    public Integer getDailyRegisterCount(String date) {
+        Integer registerCount = baseMapper.getDailyRegisterCount(date);
+        if (registerCount == 0){
+            throw new MyException(20001, "查询每天注册人数失败！");
+        }
+        return registerCount;
+    }
+
 }

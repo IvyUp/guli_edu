@@ -7,6 +7,8 @@
         <module>common</module>
         <module>service_cms</module>
         <module>service_msm</module>
+        <module>canal_client</module>
+        <module>infrastructure</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

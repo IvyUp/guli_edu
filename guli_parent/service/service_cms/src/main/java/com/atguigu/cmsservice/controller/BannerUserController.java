@@ -13,9 +13,9 @@ import java.util.Map;
 /**
  * banner用户接口
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
-@RequestMapping("/user/educms/banner")
+@RequestMapping("/educms/user/banner")
 public class BannerUserController {
 
     @Autowired

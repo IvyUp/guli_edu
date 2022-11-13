@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @Author：Ivy_up
  * @Create：2022-11-07 11:14
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/edumessage/code")
 public class MsmController {

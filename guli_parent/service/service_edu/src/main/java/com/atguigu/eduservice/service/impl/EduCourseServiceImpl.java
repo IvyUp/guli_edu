@@ -6,6 +6,7 @@ import com.atguigu.eduservice.entity.EduCourseDescription;
 import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.constant.CourseStatus;
 import com.atguigu.eduservice.entity.course.CourseQuery;
+import com.atguigu.eduservice.entity.vo.CourseDetailVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.entity.vo.CourseQueryVo;
@@ -13,6 +14,7 @@ import com.atguigu.eduservice.mapper.EduCourseMapper;
 import com.atguigu.eduservice.service.EduCourseDescriptionService;
 import com.atguigu.eduservice.service.EduCourseService;
 import com.atguigu.servicebase.exception.MyException;
+import com.atguigu.servicebase.vo.OrderCourseVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -39,6 +41,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     EduCourseDescriptionService descriptionService;
+
 
     /**
      * 添加新课程
@@ -256,6 +259,34 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         courseMap.put("hasNext",hasNext);
 
         return courseMap;
+    }
+
+    /**
+     *
+     * @param courseId
+     * @return 课程详细信息
+     */
+    @Override
+    public CourseDetailVo getCourseDetailVoById(String courseId) {
+        CourseDetailVo courseDetailVo = baseMapper.getCourseDetailVoById(courseId);
+        if (courseDetailVo == null){
+            throw new MyException(20001, "获取课程详细信息失败");
+        }
+        return courseDetailVo;
+    }
+
+    /**
+     * 获取订单中的课程信息
+     * @param courseId
+     * @return
+     */
+    @Override
+    public OrderCourseVo getOrderCourseInfo(String courseId) {
+        OrderCourseVo orderCourseVo = baseMapper.getOrderCourseInfo(courseId);
+        if (orderCourseVo == null){
+            throw new MyException(20001, "获取订单中的课程信息失败");
+        }
+        return orderCourseVo;
     }
 
 }

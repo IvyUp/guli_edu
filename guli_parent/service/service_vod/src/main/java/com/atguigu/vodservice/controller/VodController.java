@@ -15,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/eduvod/video")
-@CrossOrigin
+//@CrossOrigin
 public class VodController {
 
     @Autowired
@@ -43,10 +43,26 @@ public class VodController {
         return R.ok();
     }
 
+    /**
+     * 根据视频id，批量删除视频
+     * @param videoIds
+     * @return
+     */
     @DeleteMapping("/delete/batch")
     public R deleteVideoBatchByIds(@RequestParam List<String> videoIds){
         vodService.deleteVideoBatchByIds(videoIds);
         return R.ok();
+    }
+
+    /**
+     *
+     * @param videoId
+     * @return 阿里云视频播放凭证
+     */
+    @GetMapping("/playauth/{videoId}")
+    public R getVideoPlayAuth(@PathVariable("videoId") String videoId){
+        String playAuth = vodService.getVideoPlayAuth(videoId);
+        return R.ok().data("playAuth",playAuth);
     }
 
 

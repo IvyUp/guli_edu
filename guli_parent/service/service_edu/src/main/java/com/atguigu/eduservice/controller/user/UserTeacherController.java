@@ -18,8 +18,8 @@ import java.util.List;
  * @Create：2022-11-05 0:00
  */
 @RestController
-@CrossOrigin
-@RequestMapping("/user/eduservice/teacher")
+//@CrossOrigin
+@RequestMapping("/eduservice/user/teacher")
 public class UserTeacherController {
 
     @Autowired

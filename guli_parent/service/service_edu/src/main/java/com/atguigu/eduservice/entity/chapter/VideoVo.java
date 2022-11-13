@@ -15,4 +15,7 @@ public class VideoVo {
 
     //课程小节名称
     private String title;
+
+    //阿里云存储id
+    private String videoSourceId;
 }

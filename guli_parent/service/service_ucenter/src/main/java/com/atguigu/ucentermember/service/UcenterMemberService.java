@@ -23,4 +23,7 @@ public interface UcenterMemberService extends IService<UcenterMember> {
 
     //根据openid查询用户
     UcenterMember getMemberByOpenid(String openid);
+
+    //每天注册人数
+    Integer getDailyRegisterCount(String date);
 }

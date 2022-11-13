@@ -4,9 +4,11 @@ package com.atguigu.eduservice.service;
 import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.course.CourseQuery;
+import com.atguigu.eduservice.entity.vo.CourseDetailVo;
 import com.atguigu.eduservice.entity.vo.CourseInfoVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.atguigu.eduservice.entity.vo.CourseQueryVo;
+import com.atguigu.servicebase.vo.OrderCourseVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -50,4 +52,10 @@ public interface EduCourseService extends IService<EduCourse> {
 
     //查询课程条件分页
     Map<String, Object> getCoursePageByVo(Page<EduCourse> coursePage, CourseQueryVo courseQueryVo);
+
+    //查询课程详细信息
+    CourseDetailVo getCourseDetailVoById(String courseId);
+
+    //订单中需要的课程信息
+    OrderCourseVo getOrderCourseInfo(String courseId);
 }

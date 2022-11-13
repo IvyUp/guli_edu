@@ -18,4 +18,7 @@ public interface VodService {
 
     //批量删除视频
     void deleteVideoBatchByIds(List<String> videoIds);
+
+    //获取视频播放凭证
+    String getVideoPlayAuth(String videoId);
 }

@@ -18,9 +18,9 @@ import java.util.List;
  * @author atguigu
  * @since 2022-11-04
  */
-@CrossOrigin
+//@CrossOrigin
 @RestController
-@RequestMapping("/admin/educms/banner")
+@RequestMapping("/educms/admin/banner")
 public class BannerAdminController {
 
     @Autowired

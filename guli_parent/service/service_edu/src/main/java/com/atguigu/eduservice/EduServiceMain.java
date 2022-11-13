@@ -15,10 +15,10 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.atguigu"})
 @EnableDiscoveryClient  //注册到Nacos服务中心
 @EnableFeignClients
-public class EduTeacherMain {
+public class EduServiceMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(EduTeacherMain.class, args);
+        SpringApplication.run(EduServiceMain.class, args);
     }
 
 }

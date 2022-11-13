@@ -24,7 +24,7 @@ import java.util.HashMap;
  * @Create：2022-11-08 10:38
  */
 @Controller
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/educenter/wx")
 public class WxApiController {
 

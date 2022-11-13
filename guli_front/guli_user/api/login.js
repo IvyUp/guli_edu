@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export default {
 
-  //用户注册
+  //用户登录
   submitLogin(user) {
     return request({
       url: '/educenter/member/login',
